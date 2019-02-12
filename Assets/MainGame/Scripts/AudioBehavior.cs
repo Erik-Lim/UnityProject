@@ -31,8 +31,8 @@ public class AudioBehavior : MonoBehaviour
     {
         if (collision.gameObject.tag == "NPC")
         {
-            _AudioSource.clip = _AudioClip2;
-            _AudioSource.Play();
+            //_AudioSource.clip = _AudioClip2;
+            //_AudioSource.Play();
         }
 
     }
@@ -41,8 +41,8 @@ public class AudioBehavior : MonoBehaviour
     {
         if (collision.gameObject.tag == "NPC")
         {
-            _AudioSource.clip = _AudioClip1;
-            _AudioSource.Play();
+            //_AudioSource.clip = _AudioClip1;
+            //_AudioSource.Play();
         }
 
     }

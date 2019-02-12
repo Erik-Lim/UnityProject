@@ -6,8 +6,8 @@ TagManager:
   tags:
   - NPC
   - L2Door
-  - L1Door
   - L3Door
+  - Sally
   layers:
   - Default
   - TransparentFX
