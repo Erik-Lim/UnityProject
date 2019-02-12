@@ -41,7 +41,7 @@ public class roaming : MonoBehaviour
         {
             if (!stayIdle)
             {
-                transform.Rotate(0, 180, 0);
+                transform.Rotate(0, 90, 0);
                 animator.SetInteger("Switch", 2);
                 stayIdle = true;
             }
@@ -131,7 +131,7 @@ public class roaming : MonoBehaviour
             isWalking = isRotating = false;
             StopCoroutine(wanderCoroutine);
             transform.Translate(0, 0, 0);
-            transform.Rotate(0, 180, 0);
+            transform.Rotate(0, 90, 0);
             isWandering = false;
         }
     }
