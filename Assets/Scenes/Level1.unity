@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 2100000, guid: 71f14a2d79f732f4d9893ef1b911f4ff, type: 2}
+  m_SkyboxMaterial: {fileID: 2100000, guid: da855247af176da46a3a5ed209a94f72, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -1287,6 +1287,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.y
       value: 90
       objectReference: {fileID: 0}
+    - target: {fileID: 23490002818253606, guid: 310cca46ed279db4d8a1f7da8ae8fd73,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: b32a23ea146e94746bc9dfffc95b6c97, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 310cca46ed279db4d8a1f7da8ae8fd73, type: 3}
 --- !u!4 &236879730 stripped
@@ -1313,6 +1318,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad88e4e46e9e54844beac25fed524c22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scene: Level2
+  loadToColor: {r: 1, g: 1, b: 1, a: 1}
+  speed: 1
 --- !u!65 &236879733
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1844,6 +1852,11 @@ PrefabInstance:
     - target: {fileID: 6805708258262944, guid: a6a2dddf4364b4a48a1b7de657d096c6, type: 3}
       propertyPath: _moveSpeed
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1527320234250372265, guid: a6a2dddf4364b4a48a1b7de657d096c6,
+        type: 3}
+      propertyPath: m_Radius
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8330788844569615686, guid: a6a2dddf4364b4a48a1b7de657d096c6,
         type: 3}
@@ -2466,6 +2479,11 @@ PrefabInstance:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 23123678384848822, guid: 310cca46ed279db4d8a1f7da8ae8fd73,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: b32a23ea146e94746bc9dfffc95b6c97, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 310cca46ed279db4d8a1f7da8ae8fd73, type: 3}
 --- !u!1 &701422640 stripped
@@ -2486,6 +2504,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad88e4e46e9e54844beac25fed524c22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scene: Level2
+  loadToColor: {r: 1, g: 1, b: 1, a: 1}
+  speed: 1
 --- !u!65 &701422642
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6141,6 +6162,7 @@ MonoBehaviour:
   myButton: {fileID: 921916042}
   _AudioSource: {fileID: 1956810320}
   _AudioClip1: {fileID: 0}
+  rotSpeed: 1
 --- !u!82 &1956810320 stripped
 AudioSource:
   m_CorrespondingSourceObject: {fileID: 452585515738661570, guid: 990ce2965043cf64b83fa8f1c8fa9551,
@@ -6296,8 +6318,8 @@ MonoBehaviour:
     - Oh no, what am I going to do???
     - "I can't find my backpack anywhere! I need it to study for my last final or
       I'm going to fail...\r"
-    - "It's locked in the lab room but I don't know the combination to get it in!
-      \r"
+    - "It's probably locked in the large classroom but I don't know the combination
+      to get it in! \r"
     - 'I think some of the other students might know something about the code, but
       I don''t have time to ask around and find out who knows. '
 --- !u!114 &2025819245
@@ -6541,6 +6563,7 @@ MonoBehaviour:
   myButton: {fileID: 44300568}
   _AudioSource: {fileID: 1729517751}
   _AudioClip1: {fileID: 0}
+  rotSpeed: 1
 --- !u!1 &2041742004
 GameObject:
   m_ObjectHideFlags: 0

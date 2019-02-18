@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class CharacterControl : MonoBehaviour {
 
+    float x = 0;
+    float y = 0;
+
     [SerializeField] private float _moveSpeed = 0;
     [SerializeField] private float _rotateSpeed = 0;
 
@@ -35,13 +38,21 @@ public class CharacterControl : MonoBehaviour {
             if (Input.GetMouseButtonDown(0))
                 Cursor.lockState = CursorLockMode.Locked;
         }
-        
-        if(Input.GetButtonDown("Fire2"))
+
+        if (curState == true)
+        {
+            //x = Input.GetAxis("Mouse X") + x;
+            //y = Input.GetAxis("Mouse Y") + y;
+            //transform.Rotate(x, 0, y);
+        }
+
+        if (Input.GetButtonDown("Fire2"))
         {
             if(curState == false)
             {
                 Cursor.lockState = CursorLockMode.None;
                 curState = true;
+
             }
             else
             {

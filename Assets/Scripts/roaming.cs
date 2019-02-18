@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class roaming : MonoBehaviour
 {
+    Transform target;
+
     public Button myButton; 
 
     Animator animator;
@@ -18,9 +20,12 @@ public class roaming : MonoBehaviour
     private bool isTalking = false;
     private IEnumerator wanderCoroutine;
 
+    public float rotSpeed = 1.0f;
+
     // Start is called before the first frame update
     void Start()
     {
+        target = GameObject.FindWithTag("Player").transform;
         animator = GetComponent<Animator>();
         animator.SetInteger("Switch", 1);
         wanderCoroutine = Wander();
@@ -115,7 +120,6 @@ public class roaming : MonoBehaviour
         if (collision.gameObject.tag == "Player")
         {
             myButton.gameObject.SetActive(true);
-            //_AudioSource.clip = _AudioClip1;
             _AudioSource.Play();
 
             isWalking = isRotating = false;
@@ -133,6 +137,18 @@ public class roaming : MonoBehaviour
             transform.Translate(0, 0, 0);
             transform.Rotate(0, 90, 0);
             isWandering = false;
+        }
+    }
+
+    void OnTriggerStay(Collider collision)
+    {
+        if (collision.gameObject.tag == "Player")
+        {
+            // Face player
+            var step = rotSpeed * Time.deltaTime;
+            Vector3 direction = (target.position - transform.position).normalized;
+            Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
+            transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, step);
         }
     }
 

@@ -17,7 +17,6 @@ public class PlayerBehavior : MonoBehaviour
     void Start()
     {
         player = GetComponent<Rigidbody>();
-        Debug.Log("Welcome");
         count = 0;
         SetCountText();
     }

@@ -5,8 +5,14 @@ using UnityEngine.SceneManagement;
 
 public class loadGame : MonoBehaviour
 {
+    public string scene = "Level1";
+    public Color loadToColor = Color.black;
+    public float speed = 1.0f;
+
     public void SceneSwitcher ()
     {
-        SceneManager.LoadScene(0);
+        // Load Level 1
+        Initiate.Fade(scene, loadToColor, speed);
+        //SceneManager.LoadScene(0);
     }
 }
