@@ -10,7 +10,7 @@ public class PlayerBehavior : MonoBehaviour
     public Text countText;
 
     private Rigidbody player;
-    private float currentTime = 0.0f;
+    public static float currentTime = 0.0f;
     private int count;
 
     // Start is called before the first frame update
