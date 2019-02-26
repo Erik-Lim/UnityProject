@@ -1,25 +1,28 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CharacterControl : MonoBehaviour {
-
-    float x = 0;
-    float y = 0;
 
     [SerializeField] private float _moveSpeed = 0;
     [SerializeField] private float _rotateSpeed = 0;
 
     private bool curState = false;
 
+    private IEnumerator coroutine;
     private CharacterController _characterController;
     private Camera _camera;
+    public Image image;
+    Color color;
+
+    private bool pongPlayed = false;
+    public string scene = "PingPong";
 
     void Start ()
     {
 		_characterController = GetComponent<CharacterController>();
         _camera = Camera.main;
-
         Cursor.lockState = CursorLockMode.Locked;
     }
 	
@@ -39,13 +42,6 @@ public class CharacterControl : MonoBehaviour {
                 Cursor.lockState = CursorLockMode.Locked;
         }
 
-        if (curState == true)
-        {
-            //x = Input.GetAxis("Mouse X") + x;
-            //y = Input.GetAxis("Mouse Y") + y;
-            //transform.Rotate(x, 0, y);
-        }
-
         if (Input.GetButtonDown("Fire2"))
         {
             if(curState == false)
@@ -60,5 +56,41 @@ public class CharacterControl : MonoBehaviour {
                 curState = false;
             }
         }
+
+        if(pongPlayed)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            curState = false;
+        }
     }
+
+    IEnumerator FadeOut()
+    {
+        // alpha cannot be 0 to use CrossFadeAlpha
+        color.a = 0.01f;
+        image.color = color;
+        // Fade out to black and face board
+        image.CrossFadeAlpha(255f, 3.0f, false);
+        yield return new WaitForSeconds(3);
+        var pos = transform.position;
+        pos.x = 4.2f;
+        pos.z = 0.6f;
+        transform.position = pos;
+        // Fade back into game
+        _camera.transform.eulerAngles = new Vector3(0, 180, 0);
+        image.CrossFadeAlpha(0f, 3.0f, false);
+        yield return new WaitForSeconds(3);
+    }
+
+    void OnTriggerEnter(Collider collision)
+    {
+        if (collision.gameObject.tag == "Pong")
+        {
+            Cursor.lockState = CursorLockMode.None;
+            curState = true;
+            coroutine = FadeOut();
+            StartCoroutine(coroutine);
+        }
+    }
+
 }

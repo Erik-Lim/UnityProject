@@ -37,7 +37,6 @@ public class roaming : MonoBehaviour
     {
         if (!isWandering)
         {
-            Debug.Log("Wandering is false: STARTING COROUTINE");
             wanderCoroutine = Wander();
             StartCoroutine(wanderCoroutine);
         }
@@ -67,24 +66,19 @@ public class roaming : MonoBehaviour
             Debug.Log("Talking to player");
             animator.SetInteger("Switch", 1);
         }
-
-        Debug.Log("isWandering is " + isWandering);
     }
 
     IEnumerator Talking()
     {
-        Debug.Log("Talking to player");
         animator.SetInteger("Switch", 1);
         isTalking = true;
         yield return new WaitForSeconds(3);
-        Debug.Log("Done talking");
         isTalking = false;
         isWandering = false;
     }
 
     IEnumerator Wander()
     {
-        Debug.Log("She be wandering -------------");
         int rotTime = Random.Range(1, 3);
         int rotateWait = Random.Range(1, 3);
         int walkWait = Random.Range(1, 2);
@@ -111,7 +105,6 @@ public class roaming : MonoBehaviour
 
         isRotating = false;
         stayIdle = false;
-        Debug.Log("DONE with ------ Wander()");
         isWandering = false;
     }
 
@@ -124,7 +117,6 @@ public class roaming : MonoBehaviour
 
             isWalking = isRotating = false;
             StopCoroutine(wanderCoroutine);
-            Debug.Log("Stopped wander couroutine.");
             transform.Translate(0, 0, 0);
             isTalking = true;
         }
@@ -157,7 +149,6 @@ public class roaming : MonoBehaviour
         if (collision.gameObject.tag == "Player")
         {
             myButton.gameObject.SetActive(false);
-            Debug.Log("Done talking");
             isTalking = false;
             isWandering = false;
         }

@@ -8,6 +8,7 @@ TagManager:
   - L2Door
   - L3Door
   - Sally
+  - Pong
   layers:
   - Default
   - TransparentFX
