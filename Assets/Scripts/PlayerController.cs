@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    private float _moveSpeed = 5;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -13,7 +15,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        transform.position = new Vector3(ray.GetPoint(10f).x, 0.0f, transform.position.z);
+        //Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        transform.position = new Vector3(Input.GetAxis("Horizontal") * _moveSpeed, 0.0f, transform.position.z);
     }
 }

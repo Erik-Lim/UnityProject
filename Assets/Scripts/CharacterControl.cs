@@ -15,6 +15,7 @@ public class CharacterControl : MonoBehaviour {
     private Camera _camera;
     public Image image;
     Color color;
+    public GameObject myObject;
 
     private bool pongPlayed = false;
 
@@ -22,6 +23,7 @@ public class CharacterControl : MonoBehaviour {
     {
 		_characterController = GetComponent<CharacterController>();
         _camera = Camera.main;
+        myObject.SetActive(false);
     }
 	
 	void Update ()
@@ -57,7 +59,8 @@ public class CharacterControl : MonoBehaviour {
 
         if(pongPlayed)
         {
-            curState = false;
+            myObject.SetActive(true);
+            pongPlayed = false;
         }
     }
 
@@ -71,12 +74,13 @@ public class CharacterControl : MonoBehaviour {
         yield return new WaitForSeconds(3);
         var pos = transform.position;
         pos.x = 4.2f;
-        pos.z = 0.6f;
+        pos.z = 58.0f;
         transform.position = pos;
         // Fade back into game
         _camera.transform.eulerAngles = new Vector3(0, 180, 0);
         image.CrossFadeAlpha(0f, 3.0f, false);
         yield return new WaitForSeconds(3);
+        pongPlayed = true;
     }
 
     void OnTriggerEnter(Collider collision)
