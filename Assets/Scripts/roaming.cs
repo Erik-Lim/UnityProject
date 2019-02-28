@@ -14,6 +14,7 @@ public class roaming : MonoBehaviour
     private bool isWandering = false;
     private bool isRotating = false;
     private bool isWalking = false;
+    private bool isStanding = false;
     private bool pathIsBlocked = false;
     private IEnumerator wanderCoroutine;
     private IEnumerator avoidCoroutine;
@@ -44,6 +45,12 @@ public class roaming : MonoBehaviour
         {
             wanderCoroutine = Wander();
             StartCoroutine(wanderCoroutine);
+        }
+
+        // Idle NPC
+        if (isStanding)
+        {
+            animator.SetInteger("Switch", 1);
         }
 
         // Rotate until isRotating = false
@@ -124,6 +131,7 @@ public class roaming : MonoBehaviour
             _AudioSource.Play();
 
             isWalking = isRotating = false;
+            isStanding = true;
             StopCoroutine(wanderCoroutine);
         }
 
@@ -139,8 +147,9 @@ public class roaming : MonoBehaviour
         // Face player if collided with player
         if (collision.gameObject.tag == "Player")
         {
-            //isWalking = isRotating = false;
-            //StopCoroutine(wanderCoroutine);
+            isWalking = isRotating = false;
+            isStanding = true;
+            StopCoroutine(wanderCoroutine);
 
             var step = rotSpeed * Time.deltaTime;
             Vector3 direction = (target.position - transform.position).normalized;
@@ -154,7 +163,7 @@ public class roaming : MonoBehaviour
         // Return to wandering corounte upon player exit
         if (collision.gameObject.tag == "Player")
         {
-            isWandering = false;
+            isStanding = isWandering = false;
         }
     }
 }
