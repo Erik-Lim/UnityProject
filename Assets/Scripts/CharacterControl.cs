@@ -8,7 +8,7 @@ public class CharacterControl : MonoBehaviour {
     [SerializeField] private float _moveSpeed = 0;
     [SerializeField] private float _rotateSpeed = 0;
 
-    private bool curState = false;
+    private bool curState = true;
 
     private IEnumerator coroutine;
     private CharacterController _characterController;
@@ -17,13 +17,11 @@ public class CharacterControl : MonoBehaviour {
     Color color;
 
     private bool pongPlayed = false;
-    public string scene = "PingPong";
 
     void Start ()
     {
 		_characterController = GetComponent<CharacterController>();
         _camera = Camera.main;
-        Cursor.lockState = CursorLockMode.Locked;
     }
 	
 	void Update ()
@@ -39,27 +37,26 @@ public class CharacterControl : MonoBehaviour {
             _camera.transform.Rotate(-xRot, 0, 0);
 
             if (Input.GetMouseButtonDown(0))
-                Cursor.lockState = CursorLockMode.Locked;
+            {
+
+            }
         }
 
         if (Input.GetButtonDown("Fire2"))
         {
             if(curState == false)
             {
-                Cursor.lockState = CursorLockMode.None;
                 curState = true;
 
             }
             else
             {
-                Cursor.lockState = CursorLockMode.Locked;
                 curState = false;
             }
         }
 
         if(pongPlayed)
         {
-            Cursor.lockState = CursorLockMode.Locked;
             curState = false;
         }
     }
@@ -86,7 +83,6 @@ public class CharacterControl : MonoBehaviour {
     {
         if (collision.gameObject.tag == "Pong")
         {
-            Cursor.lockState = CursorLockMode.None;
             curState = true;
             coroutine = FadeOut();
             StartCoroutine(coroutine);

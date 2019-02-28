@@ -7,8 +7,6 @@ public class roaming : MonoBehaviour
 {
     Transform target;
 
-    public Button myButton; 
-
     Animator animator;
     public AudioSource _AudioSource;
     public AudioClip _AudioClip1;
@@ -36,7 +34,6 @@ public class roaming : MonoBehaviour
         // Initialize coroutines for later use
         wanderCoroutine = Wander();
         avoidCoroutine = avoidObstacles();
-        myButton.gameObject.SetActive(false);
     }
 
     // Update is called once per frame
@@ -125,12 +122,9 @@ public class roaming : MonoBehaviour
         if (collision.gameObject.tag == "Player")
         {
             _AudioSource.Play();
-            myButton.gameObject.SetActive(true);
 
             isWalking = isRotating = false;
             StopCoroutine(wanderCoroutine);
-            //transform.Translate(0, 0, 0);
-            //myButton.gameObject.SetActive(false);
         }
 
         else
@@ -145,15 +139,13 @@ public class roaming : MonoBehaviour
         // Face player if collided with player
         if (collision.gameObject.tag == "Player")
         {
+            //isWalking = isRotating = false;
+            //StopCoroutine(wanderCoroutine);
+
             var step = rotSpeed * Time.deltaTime;
             Vector3 direction = (target.position - transform.position).normalized;
             Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
             transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, step);
-
-            if (Input.GetButtonDown("Fire1"))
-            {
-                FindObjectOfType<DialogueTrigger>().TriggerDialogue();
-            }
         }
     }
 
@@ -163,7 +155,6 @@ public class roaming : MonoBehaviour
         if (collision.gameObject.tag == "Player")
         {
             isWandering = false;
-            FindObjectOfType<DialogueManager>().EndDialogue();
         }
     }
 }

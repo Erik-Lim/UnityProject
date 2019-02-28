@@ -92,6 +92,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _moveSpeed: 5
   _rotateSpeed: 3
+  image: {fileID: 0}
+  scene: PingPong
 --- !u!136 &1527320234250372265
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -120,6 +122,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5608ca2070bc05c44b0792c37bfd1f3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scene: MainMenu
+  loadToColor: {r: 0, g: 0, b: 0, a: 1}
+  speed: 1
+  winCanvas: {fileID: 0}
+  loseCanvas: {fileID: 0}
   setTime: {fileID: 0}
   countText: {fileID: 0}
 --- !u!114 &8330788844569615686
@@ -136,7 +143,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _AudioSource: {fileID: 647328130407952634}
-  _AudioClip1: {fileID: 8300000, guid: 2830b1ddc4a46cd4cbb615f89d4db01c, type: 3}
+  _AudioClip1: {fileID: 8300000, guid: e1ca85174f4df5646889312b698285df, type: 3}
   _AudioClip2: {fileID: 8300000, guid: ec64356ba74d0da4fb8781eddb688ff3, type: 3}
 --- !u!82 &647328130407952634
 AudioSource:
@@ -149,7 +156,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 2830b1ddc4a46cd4cbb615f89d4db01c, type: 3}
+  m_audioClip: {fileID: 8300000, guid: e1ca85174f4df5646889312b698285df, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.5
   m_Pitch: 1

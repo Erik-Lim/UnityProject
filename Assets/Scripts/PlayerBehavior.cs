@@ -2,10 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using UnityEngine.SceneManagement;
 
 public class PlayerBehavior : MonoBehaviour
 {
+    public string scene = "MainMenu";
+    public Color loadToColor = Color.black;
+    public float speed = 1.0f;
+
     public Canvas winCanvas;
     public Canvas loseCanvas;
     public Text setTime;
@@ -13,7 +17,7 @@ public class PlayerBehavior : MonoBehaviour
 
     private Rigidbody player;
     public static float currentTime = 0.0f;
-    private int count;
+    public int count;
 
     // Start is called before the first frame update
     void Start()
@@ -33,12 +37,19 @@ public class PlayerBehavior : MonoBehaviour
         setTime.text = "Time: " + currentTime;
 
         // Lose game
-        if (currentTime > 40.0f)
+        /*
+        if (currentTime > 10.0f)
         {
             // Freeze game
             Time.timeScale = 0;
             loseCanvas.gameObject.SetActive(true);
+            if (Input.GetButtonDown("Fire1"))
+            {
+                SceneManager.LoadScene(3);
+                //Initiate.Fade(scene, loadToColor, speed);
+            }
         }
+        */
     }
     
     // Must use "Collider" as variable for trigger functions
