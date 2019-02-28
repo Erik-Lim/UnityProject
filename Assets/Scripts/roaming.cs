@@ -16,67 +16,78 @@ public class roaming : MonoBehaviour
     private bool isWandering = false;
     private bool isRotating = false;
     private bool isWalking = false;
-    private bool stayIdle = false;
-    private bool isTalking = false;
+    private bool pathIsBlocked = false;
     private IEnumerator wanderCoroutine;
+    private IEnumerator avoidCoroutine;
 
     public float rotSpeed = 1.0f;
+    private float rotationsPerMinute = 10.0f;
 
     // Start is called before the first frame update
     void Start()
     {
-        target = GameObject.FindWithTag("Player").transform;
         animator = GetComponent<Animator>();
+        // Used to make NPC face player on collision 
+        target = GameObject.FindWithTag("Player").transform;
+
+        // NPC initially starts in an idle state
         animator.SetInteger("Switch", 1);
+
+        // Initialize coroutines for later use
         wanderCoroutine = Wander();
+        avoidCoroutine = avoidObstacles();
         myButton.gameObject.SetActive(false);
     }
 
     // Update is called once per frame
     void Update()
     {
+        // Begin wandering coroutine if not already wandering (isWandering = false)
         if (!isWandering)
         {
             wanderCoroutine = Wander();
             StartCoroutine(wanderCoroutine);
         }
 
+        // Rotate until isRotating = false
         if (isRotating)
         {
-            if (!stayIdle)
-            {
-                transform.Rotate(0, 90, 0);
-                animator.SetInteger("Switch", 2);
-                stayIdle = true;
-            }
-
-            else
-            {
-                animator.SetInteger("Switch", 1);
-            }
+            animator.SetInteger("Switch", 2);
+            transform.Rotate(0, 6.0f * rotationsPerMinute * Time.deltaTime, 0);  
         }
 
+        // Walk forward until isWalking = false
         if (isWalking)
         {
             transform.Translate(0, 0, Time.deltaTime);
         }
 
-        if (isTalking)
+        // Start avoid coroutine if path is blocked 
+        if (pathIsBlocked)
         {
-            Debug.Log("Talking to player");
-            animator.SetInteger("Switch", 1);
+            avoidCoroutine = avoidObstacles();
+            StartCoroutine(avoidCoroutine);
         }
     }
 
-    IEnumerator Talking()
+    // Avoidance coroutine
+    IEnumerator avoidObstacles()
     {
-        animator.SetInteger("Switch", 1);
-        isTalking = true;
-        yield return new WaitForSeconds(3);
-        isTalking = false;
-        isWandering = false;
+        pathIsBlocked = false;
+        // Random amount of time to turn for
+        int rotTime = Random.Range(1, 3);
+
+        // Stop other actions before turning
+        isWalking = isRotating = false;
+
+        // Turn; switch = 2 is turn animation
+        isRotating = true;
+        yield return new WaitForSeconds(rotTime);
+        isRotating = false;
+
     }
 
+    // Wandering coroutine
     IEnumerator Wander()
     {
         int rotTime = Random.Range(1, 3);
@@ -84,73 +95,75 @@ public class roaming : MonoBehaviour
         int walkWait = Random.Range(1, 2);
         int walkTime = Random.Range(1, 5);
 
-        // Wait
+        // Set NPC to idle; switch = 1 is idle animation
         isWandering = true;
         animator.SetInteger("Switch", 1);
         yield return new WaitForSeconds(walkWait);
 
-        // Walk
-        isWalking = true;
+        // Make NPC walk; switch = 0 is walk animation
         animator.SetInteger("Switch", 0);
+        isWalking = true;
         yield return new WaitForSeconds(walkTime);
         isWalking = false;
 
-        // Wait
+        // Wait; switch = 1 is idle animation
         animator.SetInteger("Switch", 1);
         yield return new WaitForSeconds(rotateWait);
 
-        // Turn
+        // Turn; switch = 2 is turn animation
         isRotating = true;
         yield return new WaitForSeconds(rotTime);
 
         isRotating = false;
-        stayIdle = false;
         isWandering = false;
     }
 
     void OnTriggerEnter(Collider collision)
     {
+        // Stop all other movements upon player collision
+        // Activate dialogue or audio accordingly 
         if (collision.gameObject.tag == "Player")
         {
-            myButton.gameObject.SetActive(true);
             _AudioSource.Play();
+            myButton.gameObject.SetActive(true);
 
             isWalking = isRotating = false;
             StopCoroutine(wanderCoroutine);
-            transform.Translate(0, 0, 0);
-            isTalking = true;
+            //transform.Translate(0, 0, 0);
+            //myButton.gameObject.SetActive(false);
         }
 
         else
         {
-            // Turn around if running into something
-            isWalking = isRotating = false;
-            StopCoroutine(wanderCoroutine);
-            transform.Translate(0, 0, 0);
-            transform.Rotate(0, 90, 0);
-            isWandering = false;
+            // Turn for random amount if running into something
+            pathIsBlocked = true;
         }
     }
 
     void OnTriggerStay(Collider collision)
     {
+        // Face player if collided with player
         if (collision.gameObject.tag == "Player")
         {
-            // Face player
             var step = rotSpeed * Time.deltaTime;
             Vector3 direction = (target.position - transform.position).normalized;
             Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
             transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, step);
+
+            if (Input.GetButtonDown("Fire1"))
+            {
+                FindObjectOfType<DialogueTrigger>().TriggerDialogue();
+            }
         }
     }
 
     void OnTriggerExit(Collider collision)
     {
+        // Return to wandering corounte upon player exit
         if (collision.gameObject.tag == "Player")
         {
-            myButton.gameObject.SetActive(false);
-            isTalking = false;
             isWandering = false;
+            FindObjectOfType<DialogueManager>().EndDialogue();
         }
     }
 }

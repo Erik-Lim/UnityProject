@@ -16,7 +16,6 @@ public class AudioBehavior : MonoBehaviour
         player = GetComponent<Rigidbody>();
         _AudioSource.clip = _AudioClip1;
         _AudioSource.Play();
-        Debug.Log("Audio script activated");
     }
 
     // Update is called once per frame

@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class PlayerBehavior : MonoBehaviour
 {
+    public Canvas winCanvas;
+    public Canvas loseCanvas;
     public Text setTime;
     public Text countText;
 
@@ -19,12 +21,24 @@ public class PlayerBehavior : MonoBehaviour
         player = GetComponent<Rigidbody>();
         count = 0;
         SetCountText();
+
+        // Win/lose states disabled
+        winCanvas.gameObject.SetActive(false);
+        loseCanvas.gameObject.SetActive(false);
     }
 
     void Update()
     {
         currentTime += Time.deltaTime;
         setTime.text = "Time: " + currentTime;
+
+        // Lose game
+        if (currentTime > 40.0f)
+        {
+            // Freeze game
+            Time.timeScale = 0;
+            loseCanvas.gameObject.SetActive(true);
+        }
     }
     
     // Must use "Collider" as variable for trigger functions

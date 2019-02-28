@@ -62,7 +62,7 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
-    void EndDialogue()
+    public void EndDialogue()
     {
         // used by animator to show and hide dialogue box
         animator.SetBool("IsOpen", false);
