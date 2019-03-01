@@ -6,12 +6,21 @@ public class NPCdialogue : MonoBehaviour
 {
     public DialogueTrigger low;
     public DialogueTrigger high;
+    public DialogueManager dialogueManger;
+
     private int karma = 0;
+    private bool finishedDialogue = false;
+
+    // Dialogue flags
+    private bool startedDialogue = false;
+
+
     // Start is called before the first frame update
     void Start()
     {
         // Get karma score from main player
         karma = GameObject.FindWithTag("Player").GetComponent<PlayerBehavior>().count;
+        finishedDialogue = dialogueManger.finished;
     }
 
     // Update is called once per frame
@@ -19,7 +28,8 @@ public class NPCdialogue : MonoBehaviour
     {
         // Update karma score from main player
         karma = GameObject.FindWithTag("Player").GetComponent<PlayerBehavior>().count;
-        Debug.Log(karma);
+        finishedDialogue = dialogueManger.finished;
+        Debug.Log(finishedDialogue);
     }
 
     void OnTriggerEnter(Collider collision)
@@ -40,12 +50,36 @@ public class NPCdialogue : MonoBehaviour
             {
                 // Also disable text/button that prompted player to hit button
 
-                // if collosion.karam < 10
-                if (karma < 10)
-                    low.TriggerDialogue();
-                // if collosion.karam >= 10
-                if (karma >= 10)
-                    high.TriggerDialogue();
+
+                if (startedDialogue)
+                {
+                    dialogueManger.DisplayNextSentence();
+
+                    if (finishedDialogue)
+                    {
+                        Debug.Log("NPC says finished = true");
+                        startedDialogue = false;
+                        dialogueManger.finished = false;
+                    }
+                }
+
+                else
+                {
+                    startedDialogue = true;
+
+                    // if collosion.karam < 10
+                    if (karma < 10)
+                    {
+                        low.TriggerDialogue();
+                        dialogueManger.DisplayNextSentence();
+                    }
+                    // if collosion.karam >= 10
+                    if (karma >= 10)
+                    {
+                        high.TriggerDialogue();
+                        dialogueManger.DisplayNextSentence();
+                    }
+                }
             }
         }
     }
@@ -56,6 +90,8 @@ public class NPCdialogue : MonoBehaviour
         if (collision.gameObject.tag == "Player")
         {
             FindObjectOfType<DialogueManager>().EndDialogue();
+            startedDialogue = false;
+            dialogueManger.finished = false;
         }
     }
 }

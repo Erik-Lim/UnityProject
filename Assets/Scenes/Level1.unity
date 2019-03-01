@@ -881,6 +881,11 @@ PrefabInstance:
       propertyPath: dialogue.sentences.Array.data[2]
       value: Use the left alt/fire 2 to toggle between cursor mode and game mode.
       objectReference: {fileID: 0}
+    - target: {fileID: 982184661118527506, guid: c9d2a80dc2b96014abdf41b0e52bef6a,
+        type: 3}
+      propertyPath: m_Text
+      value: Continue
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c9d2a80dc2b96014abdf41b0e52bef6a, type: 3}
 --- !u!1 &137170801
@@ -1981,6 +1986,11 @@ PrefabInstance:
       propertyPath: _moveSpeed
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 647328130407952634, guid: a6a2dddf4364b4a48a1b7de657d096c6,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1527320234250372265, guid: a6a2dddf4364b4a48a1b7de657d096c6,
         type: 3}
       propertyPath: m_Radius
@@ -2879,6 +2889,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   low: {fileID: 721581139}
   high: {fileID: 0}
+  dialogueManger: {fileID: 2135637448}
 --- !u!1 &737316436
 GameObject:
   m_ObjectHideFlags: 0
@@ -4084,6 +4095,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   start: {fileID: 1307271119}
+  dialogueManger: {fileID: 2135637448}
 --- !u!114 &1307271119 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 982184660091978579, guid: c9d2a80dc2b96014abdf41b0e52bef6a,
@@ -6388,6 +6400,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   low: {fileID: 2035943671}
   high: {fileID: 2035943667}
+  dialogueManger: {fileID: 2135637448}
 --- !u!114 &2035943667
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6958,6 +6971,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ed5a0a83fef96254ab0a0b1fbb23cc60, type: 3}
+--- !u!114 &2135637448 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3081859109584733919, guid: c9d2a80dc2b96014abdf41b0e52bef6a,
+    type: 3}
+  m_PrefabInstance: {fileID: 130407657}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdb72dc01c52e5b4684c4dcb79fdcea1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &400962965943252822
 PrefabInstance:
   m_ObjectHideFlags: 0

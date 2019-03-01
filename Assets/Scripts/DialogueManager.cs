@@ -12,6 +12,8 @@ public class DialogueManager : MonoBehaviour
     public Animator animator;
     public Button myButton;
 
+    public bool finished = false;
+
     public Queue<string> sentences;
 
     // Start is called before the first frame update
@@ -34,13 +36,15 @@ public class DialogueManager : MonoBehaviour
             sentences.Enqueue(sentence);
         }
 
-        DisplayNextSentence();
+        //DisplayNextSentence();
     }
 
     public void DisplayNextSentence()
     {
         if(sentences.Count == 0)
         {
+            finished = true;
+            //dialogueText.text = "";
             EndDialogue();
             return;
         }
@@ -67,5 +71,8 @@ public class DialogueManager : MonoBehaviour
         // used by animator to show and hide dialogue box
         animator.SetBool("IsOpen", false);
         myButton.gameObject.SetActive(false);
+        finished = true;
+        Debug.Log("mangager updated finsihed to ");
+        Debug.Log(finished);
     }
 }

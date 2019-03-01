@@ -8,7 +8,8 @@ public class CharacterControl : MonoBehaviour {
     [SerializeField] private float _moveSpeed = 0;
     [SerializeField] private float _rotateSpeed = 0;
 
-    private bool curState = true;
+    // when true, character can't move
+    private bool altToggle = true;
 
     private IEnumerator coroutine;
     private CharacterController _characterController;
@@ -24,11 +25,13 @@ public class CharacterControl : MonoBehaviour {
 		_characterController = GetComponent<CharacterController>();
         _camera = Camera.main;
         myObject.SetActive(false);
+        Cursor.lockState = CursorLockMode.Locked;
+        //Cursor.visible = false;
     }
 	
 	void Update ()
     {
-        if(curState != true)
+        if(!altToggle)
         {
             Vector3 moveDir = transform.forward * Input.GetAxis("Vertical") + transform.right * Input.GetAxis("Horizontal");
             _characterController.SimpleMove(moveDir * _moveSpeed);
@@ -39,21 +42,21 @@ public class CharacterControl : MonoBehaviour {
             _camera.transform.Rotate(-xRot, 0, 0);
 
             if (Input.GetMouseButtonDown(0))
-            {
-
-            }
+                Cursor.lockState = CursorLockMode.Locked;
         }
 
         if (Input.GetButtonDown("Fire2"))
         {
-            if(curState == false)
+            if(!altToggle)
             {
-                curState = true;
+                Cursor.lockState = CursorLockMode.None;
+                altToggle = true;
 
             }
             else
             {
-                curState = false;
+                Cursor.lockState = CursorLockMode.Locked;
+                altToggle = false;
             }
         }
 
@@ -87,7 +90,7 @@ public class CharacterControl : MonoBehaviour {
     {
         if (collision.gameObject.tag == "Pong")
         {
-            curState = true;
+            altToggle = true;
             coroutine = FadeOut();
             StartCoroutine(coroutine);
         }

@@ -5,6 +5,7 @@ using UnityEngine;
 public class gameDialogue : MonoBehaviour
 {
     public DialogueTrigger start;
+    public DialogueManager dialogueManger;
     private bool dialogueDisplayed = false;
     private bool done = false;
 
@@ -29,6 +30,12 @@ public class gameDialogue : MonoBehaviour
                     start.TriggerDialogue();
                     dialogueDisplayed = true;
                 }
+            }
+
+            // "Fire1" is Left ctrl
+            if (Input.GetButtonDown("Fire1"))
+            {
+                dialogueManger.DisplayNextSentence();
             }
 
             // "Fire" 2 isleft alt
