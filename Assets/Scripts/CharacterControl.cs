@@ -11,20 +11,13 @@ public class CharacterControl : MonoBehaviour {
     // when true, character can't move
     private bool altToggle = true;
 
-    private IEnumerator coroutine;
     private CharacterController _characterController;
-    private Camera _camera;
-    public Image image;
-    Color color;
-    public GameObject myObject;
-
-    private bool pongPlayed = false;
+    public Camera _camera;
 
     void Start ()
     {
 		_characterController = GetComponent<CharacterController>();
         _camera = Camera.main;
-        myObject.SetActive(false);
         Cursor.lockState = CursorLockMode.Locked;
         //Cursor.visible = false;
     }
@@ -59,31 +52,6 @@ public class CharacterControl : MonoBehaviour {
                 altToggle = false;
             }
         }
-
-        if(pongPlayed)
-        {
-            myObject.SetActive(true);
-            pongPlayed = false;
-        }
-    }
-
-    IEnumerator FadeOut()
-    {
-        // alpha cannot be 0 to use CrossFadeAlpha
-        color.a = 0.01f;
-        image.color = color;
-        // Fade out to black and face board
-        image.CrossFadeAlpha(255f, 3.0f, false);
-        yield return new WaitForSeconds(3);
-        var pos = transform.position;
-        pos.x = 4.2f;
-        pos.z = 58.0f;
-        transform.position = pos;
-        // Fade back into game
-        _camera.transform.eulerAngles = new Vector3(0, 180, 0);
-        image.CrossFadeAlpha(0f, 3.0f, false);
-        yield return new WaitForSeconds(3);
-        pongPlayed = true;
     }
 
     void OnTriggerEnter(Collider collision)
@@ -91,8 +59,6 @@ public class CharacterControl : MonoBehaviour {
         if (collision.gameObject.tag == "Pong")
         {
             altToggle = true;
-            coroutine = FadeOut();
-            StartCoroutine(coroutine);
         }
     }
 

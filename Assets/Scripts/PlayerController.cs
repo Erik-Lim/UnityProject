@@ -15,7 +15,9 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        transform.position = new Vector3(Input.GetAxis("Horizontal") * _moveSpeed, 0.0f, transform.position.z);
+        Vector3 pos = transform.position;
+        pos.x = _moveSpeed * Input.GetAxis("Horizontal");
+
+        transform.position = pos;
     }
 }
